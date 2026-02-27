@@ -42,7 +42,13 @@ list_available_kernel_versions() {
 
     # Group by major version (e.g., 6.18, 6.19)
     local major_versions
-    major_versions=$(echo "$all_versions" | cut -d. -f1-2 | sort -Vru)
+    if [[ -n "${SUPPORTED_KERNEL_MAJORS:-}" ]]; then
+        # Filter to only supported major versions
+        major_versions=$(echo "$SUPPORTED_KERNEL_MAJORS" | tr ' ' '\n' | sort -Vru)
+        log_debug "Filtering to supported majors: $(echo "$major_versions" | tr '\n' ' ')"
+    else
+        major_versions=$(echo "$all_versions" | cut -d. -f1-2 | sort -Vru)
+    fi
 
     log_debug "Major versions: $(echo "$major_versions" | tr '\n' ' ')"
 
