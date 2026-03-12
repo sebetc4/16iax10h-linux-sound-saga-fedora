@@ -54,19 +54,20 @@ diff -u -r -N linux-6.19/sound/hda/codecs/realtek/alc269.c patched/sound/hda/cod
  static void cs35l41_fixup_i2c_two(struct hda_codec *cdc, const struct hda_fixup *fix, int action)
  {
  	comp_generic_fixup(cdc, action, "i2c", "CSC3551", "-%s:00-cs35l41-hda.%d", 2);
-@@ -3816,6 +3826,8 @@
- 	ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED,
- 	ALC288_FIXUP_SURFACE_SWAP_DACS,
+@@ -4056,6 +4066,8 @@
  	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_GPIO,
+ 	ALC233_FIXUP_LENOVO_GPIO2_MIC_HOTKEY,
+ 	ALC245_FIXUP_BASS_HP_DAC,
 +	ALC287_FIXUP_AW88399_I2C_2,
 +	ALC287_FIXUP_LENOVO_LEGION_AW88399,
  };
 
  /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -6305,6 +6317,16 @@
- 	[ALC288_FIXUP_SURFACE_SWAP_DACS] = {
+@@ -6575,7 +6587,17 @@
+ 	[ALC245_FIXUP_BASS_HP_DAC] = {
  		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc288_fixup_surface_swap_dacs,
+ 		/* Borrow the DAC routing selected for those Thinkpads */
+ 		.v.func = alc285_fixup_thinkpad_x1_gen7,
 +	},
 +	[ALC287_FIXUP_AW88399_I2C_2] = {
 +		.type = HDA_FIXUP_FUNC,
@@ -769,8 +770,8 @@ diff -u -r -N linux-6.19/sound/soc/codecs/aw88399.c patched/sound/soc/codecs/aw8
  	int ret;
 
 @@ -1168,6 +1169,7 @@
- 		&aw88399->start_work,
- 		AW88399_START_WORK_DELAY_MS);
+ 			&aw88399->start_work,
+ 			AW88399_START_WORK_DELAY_MS);
  }
 +EXPORT_SYMBOL_GPL(aw88399_start);
 
