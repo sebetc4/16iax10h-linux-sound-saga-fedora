@@ -106,7 +106,7 @@ get_patch_file() {
         log_warn "No patch validated for kernel $kernel_version"
         log_warn "Closest match: $(basename "$patch_file")"
         log_warn "This patch may fail if upstream context has changed"
-        echo ""
+        echo "" >&2
         read -r -p "[?] Use $(basename "$patch_file") for kernel $kernel_version? [y/N] " answer
         if [[ ! "$answer" =~ ^[Yy]$ ]]; then
             log_info "Aborted by user"
